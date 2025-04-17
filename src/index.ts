@@ -1,9 +1,16 @@
-import { Hono } from 'hono'
+import { Hono } from "hono";
+import { testSchema } from "../core/schema/test";
 
-const app = new Hono()
+const app = new Hono();
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+app
+	.get("/", (c) => {
+		return c.text("Hello Hono!");
+	})
+	.post("/", async (c) => {
+		console.log(testSchema.safeParse(await c.json()));
 
-export default app
+		return c.text("posted");
+	});
+
+export default app;
